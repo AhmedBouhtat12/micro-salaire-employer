@@ -1,0 +1,51 @@
+<div class="container my-4">
+  <h2 class="text-center mb-4">Liste Departement </h2>
+
+  <!-- Table Section -->
+  <div class="mb-4">
+    <table class="table table-striped">
+      <thead class="thead-dark">
+      <tr>
+        <th>Name</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let departement of Departement">
+        <td>{{ departement.nom }}</td>
+        <td>
+          <button
+            (click)="deleteDepartement(departement.id)"
+            class="btn btn-danger btn-sm">
+            Delete
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Details Section -->
+  <div *ngIf="selectedDepartement" class="border p-3 mb-4">
+    <h3 class="text-primary">Details of Department</h3>
+    <p><strong>ID:</strong> {{ selectedDepartement.id }}</p>
+    <p><strong>Name:</strong> {{ selectedDepartement.name }}</p>
+    <p><strong>Employees:</strong> {{ selectedDepartement.employees?.length || 0 }}</p>
+  </div>
+
+  <!-- Add or Update Form Section -->
+  <div class="border p-3">
+    <h3 class="text-success mb-3">Ajouter Departement</h3>
+    <form (ngSubmit)="saveDepartement()">
+      <div class="form-group">
+        <input
+          [(ngModel)]="newDepartementName"
+          name="name"
+          placeholder="Department Name"
+          class="form-control"
+          required>
+      </div>
+      <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+  </div>
+</div>

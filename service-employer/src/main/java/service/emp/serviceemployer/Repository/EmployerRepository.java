@@ -1,4 +1,7 @@
 package service.emp.serviceemployer.Repository;
 
-public interface EmployerRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import service.emp.serviceemployer.Entities.Employer;
+
+public interface EmployerRepository extends JpaRepository<Employer, Long> {
 }

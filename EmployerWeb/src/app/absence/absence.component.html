@@ -1,0 +1,81 @@
+<div class="container mt-2">
+  <!-- Liste des absences -->
+  <div *ngIf="showTable">
+    <div class="card" >
+      <div class="card-header">Liste des Absences</div>
+      <div class="card-body">
+        <table class="table">
+          <thead>
+          <tr>
+            <th>Type</th>
+            <th>Date de Début</th>
+            <th>Date de Fin</th>
+            <th>Status</th>
+            <th>Commentaires du Manager</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let absence of absences">
+            <td>{{ absence.type }}</td>
+            <td>{{ absence.startDate | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ absence.endDate | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ absence.status }}</td>
+            <td>{{ absence.managerComments }}</td>
+            <td>
+              <button class="btn btn-warning" (click)="editAbsence(absence)">Modifier</button>
+              <button class="btn btn-danger" (click)="deleteAbsence(absence.id)">Supprimer</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <button class="btn btn-success" (click)="addAbsence()">Ajouter une Absence</button>
+      </div>
+    </div>
+
+    <!-- Affichage si aucune absence n'est trouvée -->
+    <div *ngIf="absences && absences.length === 0" class="text-warning">
+      Aucune absence trouvée.
+    </div>
+  </div>
+  <!-- Formulaire d'ajout/modification -->
+  <div *ngIf="!showTable" class="card mt-4">
+    <div class="card-header">{{ isEditing ? 'Modifier une Absence' : 'Ajouter une Absence' }}</div>
+    <div class="card-body">
+      <form (ngSubmit)="saveAbsence()">
+        <div class="mb-3">
+          <label for="type" class="form-label">Type d'Absence</label>
+          <select id="type" [(ngModel)]="newAbsence.type" name="type" class="form-control" required>
+            <option value="CONGE">Congé</option>
+            <option value="ABSENCE">Absence</option>
+            <option value="MALADIE">Maladie</option>
+            <option value="AUTRE">Autre</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="startDate" class="form-label">Date de Début</label>
+          <input type="date" id="startDate" [(ngModel)]="newAbsence.startDate" name="startDate" class="form-control" required />
+        </div>
+        <div class="mb-3">
+          <label for="endDate" class="form-label">Date de Fin</label>
+          <input type="date" id="endDate" [(ngModel)]="newAbsence.endDate" name="endDate" class="form-control" required />
+        </div>
+        <div class="mb-3">
+          <label for="status" class="form-label">Status</label>
+          <select id="status" [(ngModel)]="newAbsence.status" name="status" class="form-control" required>
+            <option value="PENDING">En Attente</option>
+            <option value="APPROVED">Approuvé</option>
+            <option value="REJECTED">Rejeté</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="managerComments" class="form-label">Commentaires du Manager</label>
+          <textarea id="managerComments" [(ngModel)]="newAbsence.managerComments" name="managerComments" class="form-control"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+        <button type="button" class="btn btn-secondary" (click)="resetForm()">Annuler</button>
+      </form>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,219 @@
+<div class="container mt-2">
+  <!-- Carte des employeurs -->
+  <div class="card">
+    <div class="card-header">
+      Liste des Employeurs
+    </div>
+    <div class="card-body">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Prénom</th>
+          <th>Email</th>
+          <th>Département</th>
+          <th>Formation</th>
+          <th>Absence</th>
+          <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let employer of employers">
+          <td>{{ employer.nom }}</td>
+          <td>{{ employer.prenom }}</td>
+          <td>{{ employer.email }}</td>
+          <td>{{ getDepartmentName(employer.departementId) }}</td>
+
+          <td>
+            <button class="btn btn-primary btn-sm me-1" (click)="selectEmployer0(employer.id)">Ajouter</button>
+            <button class="btn btn-primary btn-sm me-1" (click)="selectEmployer1(employer.id)">Voir</button>
+
+          </td>
+          <td>
+            <button class="btn btn-primary btn-sm me-1" (click)="selectEmployer(employer.id)">Ajouter</button>
+            <button class="btn btn-primary btn-sm me-1" (click)="selectEmployer2(employer.id)">Voir</button>
+          </td>
+          <td>
+            <button class="btn btn-primary btn-sm me-1" (click)="showDetails(employer)">Détails</button>
+            <button class="btn btn-warning btn-sm me-1" (click)="editEmployer(employer)">Modifier</button>
+            <button class="btn btn-danger btn-sm me-1" (click)="deleteEmployer(employer.id)">Supprimer</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+      <div *ngIf="formationsVisible" class="mt-3">
+        <label for="formation">Choisissez une formation :</label>
+        <select id="formation" [(ngModel)]="selectedFormationId">
+          <option *ngFor="let formation of formations" [value]="formation.id">
+            {{ formation.titreFormation }}
+          </option>
+        </select>
+        <button (click)="addFormationToEmployer()" class="btn btn-success btn-sm">Ajouter Formation</button>
+      </div>
+
+        <div *ngIf="absencesVisible" class="mt-3">
+        <label for="absences">Choisissez une absence :</label>
+        <select id="absences" [(ngModel)]="selectedAbsenceId">
+          <option *ngFor="let absence of absences" [value]="absence.id">
+            {{ absence.type }}
+          </option>
+        </select>
+        <button (click)="addAbsencesToEmployer()" class="btn btn-success btn-sm">Ajouter absences</button>
+      </div>
+
+
+
+      <button class="btn btn-success mt-3" (click)="toggleAddForm()">Ajouter un employé</button>
+    </div>
+  </div>
+
+
+
+
+  <!-- Message si aucun employé n'est trouvé -->
+  <div *ngIf="employers && employers.length === 0" class="text-warning">
+    Aucun employeur trouvé.
+  </div>
+
+  <div class="card mt-3" *ngIf="showAddForm">
+    <div class="card-header">
+      {{ isEditMode ? 'Modifier un Employé' : 'Ajouter un Employé' }}
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="isEditMode ? updateEmployer() : addEmployer()">
+        <div class="mb-3">
+          <label for="nom" class="form-label">Nom</label>
+          <input type="text" id="nom" [(ngModel)]="newEmployer.nom" name="nom" class="form-control" required />
+        </div>
+        <div class="mb-3">
+          <label for="prenom" class="form-label">Prénom</label>
+          <input type="text" id="prenom" [(ngModel)]="newEmployer.prenom" name="prenom" class="form-control" required />
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" id="email" [(ngModel)]="newEmployer.email" name="email" class="form-control" required />
+        </div>
+        <div class="mb-3">
+          <label for="telephone" class="form-label">Téléphone</label>
+          <input type="text" id="telephone" [(ngModel)]="newEmployer.telephone" name="telephone" class="form-control" required />
+        </div>
+        <div class="mb-3">
+          <label for="adresse" class="form-label">Adresse</label>
+          <input type="text" id="adresse" [(ngModel)]="newEmployer.adresse" name="adresse" class="form-control" required />
+        </div>
+        <div class="mb-3">
+          <label for="contractType" class="form-label">Type de Contrat</label>
+          <select id="contractType" [(ngModel)]="newEmployer.contractType" name="contractType" class="form-select" required>
+            <option value="CDI">CDI</option>
+            <option value="CDD">CDD</option>
+            <option value="FREELANCE">FREELANCE</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="departementId" class="form-label">Département</label>
+          <select id="departementId" [(ngModel)]="newEmployer.departementId" name="departementId" class="form-select" required>
+            <option *ngFor="let dept of departements" [value]="dept.id">{{ dept.nom }}</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">
+          {{ isEditMode ? 'Modifier' : 'Ajouter' }}
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="toggleAddForm()">Annuler</button>
+      </form>
+    </div>
+
+  </div>
+
+
+  <!-- Messages de succès ou d'erreur -->
+  <div *ngIf="successMessage" class="alert alert-success mt-3">
+    {{ successMessage }}
+  </div>
+  <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Détails de l'employé -->
+  <div class="card mt-3" *ngIf="selectedEmployer">
+    <div class="card-header">
+      Détails de l'Employé
+    </div>
+    <div class="card-body">
+      <p><strong>Nom :</strong> {{ selectedEmployer.nom }}</p>
+      <p><strong>Prénom :</strong> {{ selectedEmployer.prenom }}</p>
+      <p><strong>Email :</strong> {{ selectedEmployer.email }}</p>
+      <p><strong>Téléphone :</strong> {{ selectedEmployer.telephone }}</p>
+      <p><strong>Type de Contrat :</strong> {{ selectedEmployer.contractType }}</p>
+      <p><strong>Adresse :</strong> {{ selectedEmployer.adresse }}</p>
+      <button class="btn btn-secondary" (click)="selectedEmployer = null">Fermer</button>
+    </div>
+  </div>
+
+  <!-- Formations -->
+  <div *ngIf="showAddForm1" class="card mt-3">
+    <div class="card-header">
+      Formations de l'employé
+    </div>
+    <div class="card-body">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Nom de la Formation</th>
+          <th>Date de Début</th>
+          <th>Date de Fin</th>
+          <th>Description</th>
+          <th>Action</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let formation of formations">
+          <td>{{ formation.titreFormation }}</td>
+          <td>{{ formation.dateDebut | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ formation.dateFin | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ formation.certificationObtenue }}</td>
+          <td>
+            <button  class="btn btn-danger btn-sm" (click)="removeFormationFromEmployer(selectedEmployerId, formation.id)">Delete</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <button class="btn btn-secondary btn-sm float-end" (click)="toggleAddForm1()">Fermer</button>
+    </div>
+  </div>
+
+  <div  *ngIf="showAddForm2" class="card mt-3">
+    <div class="card-header">
+      Absence de l'employé
+    </div>
+    <div class="card-body">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Nom de l'Absence</th>
+          <th>Date de Début</th>
+          <th>Date de Fin</th>
+          <th>Status</th>
+          <th>Commentaires du Manager</th>
+          <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let absence of absences">
+          <td>{{ absence.type }}</td>
+          <td>{{ absence.startDate | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ absence.endDate | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ absence.status }}</td>
+          <td>{{ absence.managerComments }}</td>
+          <td>  <button class="btn btn-danger btn-sm" (click)="removeAbsenceFromEmployer(selectedEmployerId, absence.id)">  Supprimer</button> </td>
+        </tr>
+        </tbody>
+      </table>
+      <button class="btn btn-secondary btn-sm float-end" (click)="toggleAddForm2()">Fermer</button>
+    </div>
+
+
+  </div>
+</div>
+
