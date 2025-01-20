@@ -3,23 +3,46 @@ spring:
     gateway:
       globalcors:
         corsConfigurations:
-          '[/**]':
-            allowedOrigins: "http://localhost:4200"
-            allowedHeaders: "*"
-            allowedMethods:
+          '[/**]': # Autoriser CORS pour toutes les routes
+            allowedOrigins: "http://localhost:4200" # Frontend Angular
+            allowedHeaders: "*" # Tous les en-têtes autorisés
+            allowedMethods: # Méthodes HTTP autorisées
               - GET
               - POST
               - PUT
               - DELETE
-      routes:
-        - id: employee-service
-          uri: http://localhost:8081/
-          predicates:
-            - Path=/employees/**
-          filters:
-            - JwtAuthenticationFilter
-
-
-
-
-
+#      routes:
+#        # Service Auth
+#        - id: service-Auth
+#          uri: http://localhost:8065
+#          predicates:
+#            - Path=/api/auth/**
+#          filters:
+#            - StripPrefix=1
+#
+#        # Service Département
+#        - id: service-departement
+#          uri: http://localhost:9002/SERVICE-DEPARTEMENT
+#          predicates:
+#            - Path=/api/departements/**
+#          filters:
+#            - StripPrefix=1
+#            - name: JwtAuthFilter
+#
+#        # Service Employer
+#        - id: service-employer
+#          uri: http://localhost:9098/service-employer
+#          predicates:
+#            - Path=/api/employers/**
+#          filters:
+#            - StripPrefix=1
+#            - name: JwtAuthFilter
+#
+#        # Service Formation
+#        - id: service-formation
+#          uri: http://localhost:9095/service-formation
+#          predicates:
+#            - Path=/api/formations/**
+#          filters:
+#            - StripPrefix=1
+#            - name: JwtAuthFilter

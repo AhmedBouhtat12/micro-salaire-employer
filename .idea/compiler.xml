@@ -9,8 +9,8 @@
         <outputRelativeToContentRoot value="true" />
         <module name="service-Eureka" />
         <module name="service-config" />
-        <module name="cloud_project" />
         <module name="service-getway" />
+        <module name="service-Authent" />
       </profile>
       <profile name="Annotation profile for service-departement" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -34,10 +34,14 @@
         <module name="service-formation" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="cloud_project" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="cloud_project" options="-parameters" />
+      <module name="service-Authent" options="-parameters" />
       <module name="service-Eureka" options="-parameters" />
       <module name="service-absences" options="-parameters" />
       <module name="service-config" options="-parameters" />

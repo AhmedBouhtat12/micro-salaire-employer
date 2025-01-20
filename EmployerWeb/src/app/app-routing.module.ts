@@ -5,12 +5,15 @@ import { FormationComponent } from './formation/formation.component';
 
 import {AbsenceComponent} from './absence/absence.component';
 import {DepartementComponent} from './departement/departement.component';
+import {LoginComponent} from './login/login.component';
 
 export const routes: Routes = [
   { path: 'employers', component: EmployersComponent },
   { path: 'formations', component: FormationComponent },
   { path: 'department', component: DepartementComponent },
-  { path: 'absences', component: AbsenceComponent }
+  { path: 'absences', component: AbsenceComponent },
+  { path: 'login', component: LoginComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
 
 ];
 
