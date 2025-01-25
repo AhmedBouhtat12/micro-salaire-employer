@@ -1,0 +1,99 @@
+/* Style global */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f9fa; /* Gris clair pour un fond élégant */
+  color: #333; /* Texte gris foncé pour une meilleure lisibilité */
+}
+
+.dashboard-container {
+  max-width: 1200px;
+  padding: 20px;
+  margin-left: 450px;
+
+}
+
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.dashboard-header h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #343a40; /* Bleu foncé pour attirer l’attention */
+}
+
+/* Section des actions rapides */
+.quick-actions {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.actions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+/* Carte individuelle */
+.card-content {
+  background-color: #f1f5f9; /* Couleur de fond douce */
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-content:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+.card-content h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #343a40; /* Bleu pour différencier les titres */
+  margin-bottom: 10px;
+}
+
+.card-content .stat-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #343a40; /* Texte noir doux */
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .dashboard-header h1 {
+    font-size: 2rem;
+  }
+
+  .card-content h3 {
+    font-size: 1rem;
+  }
+
+  .card-content .stat-value {
+    font-size: 1.5rem;
+  }
+}
+
+
+.card-content {
+  background-color: #f1f5f9;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer; /* Ajout d'un curseur de pointeur */
+}
+
+.card-content:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}

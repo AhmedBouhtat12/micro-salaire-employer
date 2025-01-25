@@ -1,14 +1,14 @@
 <div class="container mt-5">
-  <!-- Titre de la section -->
+
   <div class="card shadow-lg border-0 mb-5">
-    <div class="card-header bg-gradient text-dark rounded-top">
-      <h3 class="mb-0 font-weight-bold">Liste des Formations</h3>
+    <div class="card-header bg-gradient text-white rounded-top">
+      <h3 class="mb-0">Liste des Formations</h3>
     </div>
 
     <!-- Liste des formations -->
     <div *ngIf="formations && formations.length > 0">
       <table class="table table-striped table-bordered table-hover">
-        <thead class="bg-light">
+        <thead>
         <tr>
           <th>Titre</th>
           <th>Date de Début</th>
@@ -24,10 +24,14 @@
           <td>{{ formation.dateFin | date: 'dd/MM/yyyy' }}</td>
           <td>{{ formation.certificationObtenue || 'Non spécifiée' }}</td>
           <td>
-            <button class="btn btn-outline-info btn-sm me-2" (click)="editFormation(formation)">
+            <button
+              class="btn btn-outline-info btn-sm me-2"
+              (click)="editFormation(formation)">
               <i class="bi bi-pencil"></i> Modifier
             </button>
-            <button class="btn btn-outline-danger btn-sm" (click)="deleteFormation(formation.id)">
+            <button
+              class="btn btn-outline-danger btn-sm"
+              (click)="deleteFormation(formation.id)">
               <i class="bi bi-trash"></i> Supprimer
             </button>
           </td>
@@ -36,7 +40,7 @@
       </table>
     </div>
 
-    <!-- Message si aucune formation n'est disponible -->
+    <!-- Alerte si aucune formation -->
     <div *ngIf="formations && formations.length === 0" class="alert alert-warning shadow-sm">
       <i class="bi bi-exclamation-triangle-fill"></i> Aucune formation disponible.
     </div>
@@ -44,14 +48,17 @@
 
   <!-- Bouton d'ajout de formation -->
   <div class="text-center mb-4">
-    <button class="btn btn-primary rounded-pill shadow" (click)="addFormation()">
+    <button
+      class="btn btn-primary rounded-pill shadow"
+      (click)="addFormation()">
       <i class="bi bi-plus-circle"></i> Ajouter une Formation
     </button>
   </div>
 
-  <!-- Formulaire de modification/ajout de formation -->
-  <div *ngIf="isEditing" class="card shadow-lg border-0">
-    <div class="card-header bg-primary text-white rounded-top">
+  <!-- Formulaire de modification/ajout -->
+  <div *ngIf="isEditing" class="card shadow-lg border-0 mb-5">
+    <!-- Entête avec couleur de fond 343a40 -->
+    <div class="card-header" style="background-color: #343a40; color: white;" class="rounded-top">
       <h4>{{ selectedFormation.id ? 'Modifier' : 'Ajouter' }} une Formation</h4>
     </div>
     <div class="card-body">
@@ -95,17 +102,21 @@
             [(ngModel)]="selectedFormation.certificationObtenue"
             name="certificationObtenue"
             class="form-control"
-            placeholder="Entrez la certification obtenue (facultatif)" required />
+            placeholder="Entrez la certification obtenue (facultatif)" />
         </div>
         <div class="d-flex justify-content-between">
           <button type="submit" class="btn btn-success shadow">
             <i class="bi bi-save"></i> Enregistrer
           </button>
-          <button type="button" class="btn btn-secondary shadow" (click)="cancelEdit()">
+          <button
+            type="button"
+            class="btn btn-secondary shadow"
+            (click)="cancelEdit()">
             <i class="bi bi-x-circle"></i> Annuler
           </button>
         </div>
       </form>
     </div>
   </div>
+
 </div>

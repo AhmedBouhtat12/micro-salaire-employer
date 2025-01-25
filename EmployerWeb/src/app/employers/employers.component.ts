@@ -1,10 +1,12 @@
 import {Component, NgIterable, OnInit} from '@angular/core';
 import { EmployerService } from '../employer.service';
-import { Employer } from '../employer.model';
+
 import { FormsModule } from '@angular/forms';
 import { DatePipe, NgForOf, NgIf } from '@angular/common';
 import {FormationService} from '../formation/formation.service';
 import {DepartementService} from '../departement/departement.service';
+import {User} from '../employer.model';
+import {FilterByRolePipe} from './FilterByRolePipe';
 
 
 @Component({
@@ -14,12 +16,13 @@ import {DepartementService} from '../departement/departement.service';
     FormsModule,
     NgIf,
     NgForOf,
-    DatePipe
+    DatePipe,
+    FilterByRolePipe
   ],
   styleUrls: ['./employers.component.css']
 })
 export class EmployersComponent implements OnInit {
-  employers: Employer[] = [];
+  employers: User[] = [];
   departements: any[] = [];
   formations: any[] = [];
   absences: any[] = [];
@@ -34,17 +37,21 @@ export class EmployersComponent implements OnInit {
   showAddForm1: boolean = false;
   showAddForm2: boolean = false;
   showUpdateForm: boolean = false;
-  selectedEmployer: Employer | null = null;
+  selectedEmployer: User | null = null;
   formationsVisible: boolean = false;
   absencesVisible: boolean = false;
-  newEmployer: Employer = {
-    id: undefined, // Champ id optionnel
-    nom: '',
-    prenom: '',
-    email: '',
-    telephone: '',
+
+  newEmployer: User = {
+    address: '',
     contractType: '',
-    adresse: ''
+    email: '',
+    prenom: '',
+    nom: '',
+    password: '',
+    role: 'EMPLOYER',  // Valeur par défaut pour le rôle
+    telephone: '',
+    username: '',
+    id: undefined // Champ id optionnel
   };
 
 
@@ -116,32 +123,37 @@ export class EmployersComponent implements OnInit {
   toggleAddForm2(): void {
     this.showAddForm2 = !this.showAddForm2;
   }
-
-  addEmployer(): void {
-    this.employerService.addEmployer(this.newEmployer).subscribe({
-      next: (employer) => {
-        this.employers.push(employer);
-        this.resetForm();
-        this.showMessage('success', 'Employé ajouté avec succès !');
-        this.toggleAddForm();
+  addEmployer() {
+    this.employerService.register(this.newEmployer).subscribe({
+      next: (response) => {
+        console.log('Employé ajouté avec succès:', response);
+        // Logique après l'ajout, par exemple réinitialiser le formulaire ou rediriger
       },
-      error: (err) => {
-        this.showMessage('error', `Erreur lors de l'ajout de l'employé : ${err.message}`);
-        console.error('Erreur:', err);
+      error: (error) => {
+        console.error('Erreur lors de l\'ajout de l\'employé:', error);
+        if (error.status) {
+          console.error(`Erreur HTTP ${error.status}: ${error.message}`);
+        }
+        // Vous pouvez également afficher un message d'erreur à l'utilisateur ici
       }
     });
   }
 
 
 
-  updatedEmployer: Employer = { // Employer à mettre à jour
-    id: undefined,
-    nom: '',
-    prenom: '',
-    email: '',
-    telephone: '',
+
+  updatedEmployer: User = {
+    address: '',
     contractType: '',
-    adresse: ''
+    email: '',
+    prenom: '',
+    nom: '',
+    password: '',
+    role: 'EMPLOYER',
+    telephone: '',
+    username: '', // Employer à mettre à jour
+    id: undefined
+
   };
   private showMessage(messageType: 'success' | 'error', message: string): void {
     if (messageType === 'success') {
@@ -155,7 +167,7 @@ export class EmployersComponent implements OnInit {
     }, 3000);
   }
 
-  showDetails(employer: Employer): void {
+  showDetails(employer: User): void {
     this.selectedEmployer = employer;
     this.successMessage = '';
     this.errorMessage = '';
@@ -278,7 +290,7 @@ export class EmployersComponent implements OnInit {
       }
     });
   }
-  toggleUpdateForm(employer: Employer): void {
+  toggleUpdateForm(employer: User): void {
     this.showUpdateForm = true;
     this.updatedEmployer = { ...employer };
     this.successMessage = '';
@@ -313,14 +325,16 @@ export class EmployersComponent implements OnInit {
   }
   resetForm(): void {
     this.newEmployer = {
-      id: undefined,
-      nom: '',
-      prenom: '',
-      email: '',
-      telephone: '',
-      adresse: '',
+      address: '',
       contractType: '',
-      departementId: undefined
+      email: '',
+      prenom: '',
+      nom: '',
+      password: '',
+      role: 'EMPLOYER',
+      telephone: '',
+      username: '', // Employer à mettre à jour
+      id: undefined
     };
   }
 

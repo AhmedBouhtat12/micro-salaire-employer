@@ -1,37 +1,64 @@
-import { Component } from '@angular/core';
-
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { LoginService } from './login.service';
 import { Router } from '@angular/router';
-import {AuthService} from './auth.service';
-import {FormsModule} from '@angular/forms';
-import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-login',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
-  imports: [
-    FormsModule,
-    NgIf
-  ]
+  styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
-  credentials = {
-    username: '',
-    password: '',
-  };
-  errorMessage: string | null = null;
+export class LoginComponent implements OnInit {
+  loginForm: FormGroup;
+  isLoading = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private fb: FormBuilder,
+    private loginService: LoginService,
+    private router: Router
+  ) {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+      rememberMe: [false]
+    });
+  }
+
+  ngOnInit(): void {}
+
+  isFieldInvalid(field: string): boolean {
+    const formControl = this.loginForm.get(field);
+    return formControl ? formControl.invalid && formControl.touched : false;
+  }
 
   onSubmit(): void {
-    this.authService.login(this.credentials).subscribe(
-      (response: { token: string; }) => {
-        localStorage.setItem('token', response.token); // Stocker le token JWT
-        this.router.navigate(['/']); // Rediriger vers la page d'accueil ou une autre page
-      },
-      (error) => {
-        this.errorMessage = 'Nom d’utilisateur ou mot de passe incorrect.';
-      }
-    );
+    if (this.loginForm.valid) {
+      this.isLoading = true;
+      const { email, password } = this.loginForm.value;
+
+      this.loginService.login(email, password).subscribe({
+        next: (response) => {
+          this.isLoading = false;
+          // Handle successful login, e.g., store token and navigate to dashboard
+          console.log('Login successful', response);
+          this.router.navigate(['/dashboard']);
+        },
+        error: (error) => {
+          this.isLoading = false;
+          // Handle login error, e.g., show error message
+          console.error('Login failed', error);
+        }
+      });
+    } else {
+      Object.keys(this.loginForm.controls).forEach(key => {
+        const control = this.loginForm.get(key);
+        if (control) {
+          control.markAsTouched();
+        }
+      });
+    }
   }
 }

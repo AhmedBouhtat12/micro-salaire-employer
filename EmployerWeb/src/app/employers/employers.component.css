@@ -1,6 +1,57 @@
-form {
-  border: 1px solid #ddd;
-  padding: 15px;
-  border-radius: 5px;
-  background-color: #f9f9f9;
+.card-header {
+  background-color: #343a40;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border-radius: 8px 8px 0 0;
+
 }
+
+.table th {
+  background-color: #343a40;
+  color: white;
+  text-align: center;
+
+}
+
+.btn-primary {
+  background-color: #343a40;
+  border-color: #343a40;
+  color: white;
+}
+
+.btn-primary:hover {
+  opacity: 0.8;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-warning {
+  background-color: #ffc107;
+  color: black;
+}
+
+.card-body {
+  background-color: #f8f9fa;
+  padding: 1.5rem;
+
+}
+
+.form-label {
+  font-weight: bold;
+
+
+}
+
+.form-select {
+  border-radius: 5px;
+  padding: 0.5rem;
+
+}
+.container {
+  margin-left: 420px;
+}
+

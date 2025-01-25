@@ -1,46 +1,60 @@
-<div class="container mt-2">
-  <!-- Liste des absences -->
-  <div *ngIf="showTable">
-    <div class="card" >
-      <div class="card-header">Liste des Absences</div>
-      <div class="card-body">
-        <table class="table">
-          <thead>
-          <tr>
-            <th>Type</th>
-            <th>Date de Début</th>
-            <th>Date de Fin</th>
-            <th>Status</th>
-            <th>Commentaires du Manager</th>
-            <th>Actions</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let absence of absences">
-            <td>{{ absence.type }}</td>
-            <td>{{ absence.startDate | date: 'dd/MM/yyyy' }}</td>
-            <td>{{ absence.endDate | date: 'dd/MM/yyyy' }}</td>
-            <td>{{ absence.status }}</td>
-            <td>{{ absence.managerComments }}</td>
-            <td>
-              <button class="btn btn-warning" (click)="editAbsence(absence)">Modifier</button>
-              <button class="btn btn-danger" (click)="deleteAbsence(absence.id)">Supprimer</button>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-        <button class="btn btn-success" (click)="addAbsence()">Ajouter une Absence</button>
-      </div>
+<div class="container mt-5">
+  <div class="card shadow-lg border-0 mb-5">
+    <div class="card-header bg-gradient text-white rounded-top">
+      <h3 class="mb-0">Liste des Absences</h3>
     </div>
 
-    <!-- Affichage si aucune absence n'est trouvée -->
-    <div *ngIf="absences && absences.length === 0" class="text-warning">
-      Aucune absence trouvée.
+    <!-- Liste des absences -->
+    <div *ngIf="absences && absences.length > 0">
+      <table class="table table-striped table-bordered table-hover">
+        <thead>
+        <tr>
+          <th>Type</th>
+          <th>Date de Début</th>
+          <th>Date de Fin</th>
+          <th>Status</th>
+          <th>Commentaires du Manager</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let absence of absences">
+          <td>{{ absence.type }}</td>
+          <td>{{ absence.startDate | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ absence.endDate | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ absence.status }}</td>
+          <td>{{ absence.managerComments }}</td>
+          <td>
+            <button class="btn btn-outline-info btn-sm me-2" (click)="editAbsence(absence)">
+              <i class="bi bi-pencil"></i> Modifier
+            </button>
+            <button class="btn btn-outline-danger btn-sm" (click)="deleteAbsence(absence.id)">
+              <i class="bi bi-trash"></i> Supprimer
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Alerte si aucune absence -->
+    <div *ngIf="absences && absences.length === 0" class="alert alert-warning shadow-sm">
+      <i class="bi bi-exclamation-triangle-fill"></i> Aucune absence trouvée.
     </div>
   </div>
-  <!-- Formulaire d'ajout/modification -->
-  <div *ngIf="!showTable" class="card mt-4">
-    <div class="card-header">{{ isEditing ? 'Modifier une Absence' : 'Ajouter une Absence' }}</div>
+
+  <!-- Bouton d'ajout d'absence -->
+  <div class="text-center mb-4">
+    <button class="btn btn-primary rounded-pill shadow" (click)="addAbsence()">
+      <i class="bi bi-plus-circle"></i> Ajouter une Absence
+    </button>
+  </div>
+
+  <!-- Formulaire de modification/ajout -->
+  <div *ngIf="!showTable" class="card shadow-lg border-0 mb-5">
+    <div class="card-header" style="background-color: #343a40; color: white;" class="rounded-top">
+      <h4>{{ isEditing ? 'Modifier' : 'Ajouter' }} une Absence</h4>
+    </div>
     <div class="card-body">
       <form (ngSubmit)="saveAbsence()">
         <div class="mb-3">
@@ -72,10 +86,15 @@
           <label for="managerComments" class="form-label">Commentaires du Manager</label>
           <textarea id="managerComments" [(ngModel)]="newAbsence.managerComments" name="managerComments" class="form-control"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Enregistrer</button>
-        <button type="button" class="btn btn-secondary" (click)="resetForm()">Annuler</button>
+        <div class="d-flex justify-content-between">
+          <button type="submit" class="btn btn-success shadow">
+            <i class="bi bi-save"></i> Enregistrer
+          </button>
+          <button type="button" class="btn btn-secondary shadow" (click)="resetForm()">
+            <i class="bi bi-x-circle"></i> Annuler
+          </button>
+        </div>
       </form>
     </div>
   </div>
-
 </div>

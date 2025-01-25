@@ -14,7 +14,16 @@
         <option value="$PROJECT_DIR$/service-Auth/pom.xml" />
         <option value="$PROJECT_DIR$/cloud_project/pom.xml" />
         <option value="$PROJECT_DIR$/service-Authent/pom.xml" />
+        <option value="$PROJECT_DIR$/user-service/pom.xml" />
+        <option value="$PROJECT_DIR$/Userr-Service/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/service-Authent/pom.xml" />
+        <option value="$PROJECT_DIR$/service-employer/pom.xml" />
+        <option value="$PROJECT_DIR$/user-service/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_17" project-jdk-name="corretto-21" project-jdk-type="JavaSDK">

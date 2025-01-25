@@ -1,9 +1,9 @@
-<div class="container my-4">
-  <h2 class="text-center mb-4">Liste Departement </h2>
+<div class="container my-5">
+  <h2 class="text-center mb-4">Liste des Départements</h2>
 
   <!-- Table Section -->
-  <div class="mb-4">
-    <table class="table table-striped">
+  <div class="mb-5">
+    <table class="table table-bordered table-hover">
       <thead class="thead-dark">
       <tr>
         <th>Name</th>
@@ -17,7 +17,7 @@
           <button
             (click)="deleteDepartement(departement.id)"
             class="btn btn-danger btn-sm">
-            Delete
+            Supprimer
           </button>
         </td>
       </tr>
@@ -26,26 +26,26 @@
   </div>
 
   <!-- Details Section -->
-  <div *ngIf="selectedDepartement" class="border p-3 mb-4">
-    <h3 class="text-primary">Details of Department</h3>
+  <div *ngIf="selectedDepartement" class="details-section border p-4 mb-4 shadow-lg">
+    <h3 class="text-primary">Détails du Département</h3>
     <p><strong>ID:</strong> {{ selectedDepartement.id }}</p>
-    <p><strong>Name:</strong> {{ selectedDepartement.name }}</p>
-    <p><strong>Employees:</strong> {{ selectedDepartement.employees?.length || 0 }}</p>
+    <p><strong>Nom:</strong> {{ selectedDepartement.name }}</p>
+    <p><strong>Nombre d'employés:</strong> {{ selectedDepartement.employees?.length || 0 }}</p>
   </div>
 
   <!-- Add or Update Form Section -->
-  <div class="border p-3">
-    <h3 class="text-success mb-3">Ajouter Departement</h3>
+  <div class="form-section border p-4 shadow-lg">
+    <h3 class="text-success mb-4">Ajouter un Département</h3>
     <form (ngSubmit)="saveDepartement()">
       <div class="form-group">
         <input
           [(ngModel)]="newDepartementName"
           name="name"
-          placeholder="Department Name"
+          placeholder="Nom du département"
           class="form-control"
           required>
       </div>
-      <button type="submit" class="btn btn-primary">Save</button>
+      <button type="submit" class="btn btn-primary">Sauvegarder</button>
     </form>
   </div>
 </div>

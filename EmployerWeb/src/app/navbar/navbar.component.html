@@ -1,32 +1,42 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<!-- Empty Navbar at the top with the same color as the sidebar header -->
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #34495e;">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Gestion des Employés</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Accueil</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/employers">Employés</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Services
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="/formations">Formations</a></li>
-            <li><a class="dropdown-item" href="/absences">Absences</a></li>
-            <li><a class="dropdown-item" href="/department">Départements</a></li>
-            <li><a class="dropdown-item" href="/salaires">Salaires</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/contact">Contact</a>
-        </li>
-      </ul>
-    </div>
+    <!-- Vous pouvez ajouter un titre ou du contenu ici si nécessaire -->
   </div>
 </nav>
+
+<!-- Si ce n'est pas la page de connexion, afficher la sidebar -->
+<aside *ngIf="!isLoginPage" class="sidebar">
+  <div class="sidebar-header" style="background-color: #34495e;">
+    <a class="navbar-brand">Gestion des Employés</a>
+  </div>
+  <div class="sidebar-content">
+    <ul class="nav flex-column">
+      <!-- Item commun pour RESPONSABLE et EMPLOYER -->
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/RESPONSABLE/dashboard">Accueil</a>
+      </li>
+
+      <!-- Afficher ces éléments uniquement pour le rôle RESPONSABLE -->
+      <li class="nav-item" *ngIf="isResponsable">
+        <a class="nav-link" routerLink="/RESPONSABLE/employers">Employés</a>
+      </li>
+      <li class="nav-item" *ngIf="isResponsable">
+        <a class="nav-link" routerLink="/RESPONSABLE/formations">Formations</a>
+      </li>
+      <li class="nav-item" *ngIf="isResponsable">
+        <a class="nav-link" routerLink="/RESPONSABLE/absences">Absences</a>
+      </li>
+      <li class="nav-item" *ngIf="isResponsable">
+        <a class="nav-link" routerLink="/RESPONSABLE/department">Départements</a>
+      </li>
+
+
+
+      <!-- Bouton de déconnexion commun pour RESPONSABLE et EMPLOYER -->
+      <li class="nav-item">
+        <button class="btn btn-danger" (click)="logout()">Déconnexion</button>
+      </li>
+    </ul>
+  </div>
+</aside>

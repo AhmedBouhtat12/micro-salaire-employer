@@ -1,0 +1,29 @@
+<div class="dashboard-container">
+  <header class="dashboard-header">
+    <h1>Tableau de bord RH</h1>
+  </header>
+
+  <section class="quick-actions">
+    <div class="actions-grid">
+      <div class="card-content" routerLink="/RESPONSABLE/employers">
+        <h3>Nombre total d'employés</h3>
+        <p class="stat-value">{{ totalEmployees }}</p>
+      </div>
+
+      <div class="card-content" routerLink="/RESPONSABLE/absences">
+        <h3>Nombre total d'absences</h3>
+        <p class="stat-value">{{ totalAbsences }}</p>
+      </div>
+
+      <div class="card-content" routerLink="/RESPONSABLE/department">
+        <h3>Nombre total de départements</h3>
+        <p class="stat-value">{{ totalDepartements }}</p>
+      </div>
+
+      <div class="card-content" routerLink="/RESPONSABLE/formations">
+        <h3>Nombre total de formations</h3>
+        <p class="stat-value">{{ totalFormations }}</p>
+      </div>
+    </div>
+  </section>
+</div>

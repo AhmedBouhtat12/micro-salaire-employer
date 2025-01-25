@@ -1,0 +1,29 @@
+<div class="container my-5">
+<div class="card-header">
+  Formations de l'employé
+</div>
+<div class="card-body">
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Nom de la Formation</th>
+      <th>Date de Début</th>
+      <th>Date de Fin</th>
+      <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let formation of formations">
+      <td>{{ formation.titreFormation }}</td>
+      <td>{{ formation.dateDebut | date: 'dd/MM/yyyy' }}</td>
+      <td>{{ formation.dateFin | date: 'dd/MM/yyyy' }}</td>
+      <td>{{ formation.certificationObtenue }}</td>
+
+    </tr>
+    </tbody>
+  </table>
+
+</div>
+</div>
+
+

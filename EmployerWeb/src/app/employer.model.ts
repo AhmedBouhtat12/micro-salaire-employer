@@ -20,16 +20,22 @@ export interface Departement {
   nom: string;
 }
 
-export interface Employer {
 
+
+export interface User {
   id?: number;
+  username: string;
   nom: string;
   prenom: string;
-  adresse: string;
   email: string;
+  password: string;
+  role: 'EMPLOYER' | 'RESPONSABLE';  // Enum pour les rôles
+  address: string;
   telephone: string;
-  contractType: string;
-  departementId?:number;
-
-
+  contractType: string;  // Assuming ContractType is a string enum
+  formationId?: number[];
+  absencesId?: number[];
+  departementId?: number;
 }
+
+

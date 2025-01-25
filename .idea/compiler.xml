@@ -10,7 +10,6 @@
         <module name="service-Eureka" />
         <module name="service-config" />
         <module name="service-getway" />
-        <module name="service-Authent" />
       </profile>
       <profile name="Annotation profile for service-departement" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -21,6 +20,7 @@
         </processorPath>
         <module name="service-departement" />
         <module name="service-absences" />
+        <module name="Userr-Service" />
       </profile>
       <profile name="Annotation profile for service-formation" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -30,16 +30,18 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
         </processorPath>
-        <module name="service-employer" />
         <module name="service-formation" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="cloud_project" target="17" />
+      <module name="service-Authent" target="17" />
+      <module name="service-employer" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Userr-Service" options="-parameters" />
       <module name="cloud_project" options="-parameters" />
       <module name="service-Authent" options="-parameters" />
       <module name="service-Eureka" options="-parameters" />

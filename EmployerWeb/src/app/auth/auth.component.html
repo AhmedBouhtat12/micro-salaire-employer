@@ -1,0 +1,41 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h2 class="auth-title">Gestion des Employés</h2>
+      <h2 class="auth-title">Bienvenue</h2>
+      <p class="auth-subtitle">Veuillez vous connecter pour continuer</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
+      <div class="form-group">
+        <label for="username">Nom d'utilisateur</label>
+        <div class="input-container">
+          <input
+            type="text"
+            id="username"
+            formControlName="username"
+            placeholder="Entrez votre nom d'utilisateur"
+            class="form-control"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <div class="input-container">
+          <input
+            type="password"
+            id="password"
+            formControlName="password"
+            placeholder="Entrez votre mot de passe"
+            class="form-control"
+          />
+        </div>
+      </div>
+
+      <button type="submit" class="auth-button" [disabled]="!loginForm.valid">
+        Se connecter
+      </button>
+    </form>
+  </div>
+</div>
