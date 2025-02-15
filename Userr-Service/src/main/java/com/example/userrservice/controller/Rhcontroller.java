@@ -24,23 +24,25 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/Rh")
-//@PreAuthorize("hasRole('EMPLOYER')")
 public class Rhcontroller {
+
     @Autowired
     private EmployerService employerService;
+
     @Autowired
     private DepartementFeignClient departementFeignClient;
+
     @Autowired
     private FormationFeignClient formationFeignClient;
+
     @Autowired
     private AbsenceRestClient absenceRestClient;
 
 
-
-    @GetMapping("/{employerId}/absences")
-    public ResponseEntity<List<Absence>> getAbsencesByEmployerId(@PathVariable Long employerId) {
-        Optional<User> employer = employerService.getEmployerById(employerId);
-        if (employer.isPresent()) {
+    @GetMapping("/{username}/absences")
+    public ResponseEntity<List<Absence>> getAbsencesByUsername(@PathVariable String username) {
+        Optional<User> employer = employerService.getEmployerByUsername(username);
+        ²   if (employer.isPresent()) {
             List<Long> absencesId = employer.get().getAbsencesId();
 
             List<Absence> absences = absencesId.stream()
@@ -52,9 +54,9 @@ public class Rhcontroller {
         }
     }
 
-    @GetMapping("/{employerId}/formations")
-    public ResponseEntity<List<FormationDto>> getFormationsByEmployerId(@PathVariable Long employerId) {
-        Optional<User> employer = employerService.getEmployerById(employerId);
+    @GetMapping("/{username}/formations")
+    public ResponseEntity<List<FormationDto>> getFormationsByUsername(@PathVariable String username) {
+        Optional<User> employer = employerService.getEmployerByUsername(username);
         if (employer.isPresent()) {
             List<Long> formationIds = employer.get().getFormationId();
 
@@ -64,16 +66,15 @@ public class Rhcontroller {
                             FormationDto formation = formationFeignClient.getFormationById(formationId);
                             return formation != null ? formation : null;
                         } catch (Exception e) {
-                            // Gérer l'exception en cas d'échec de l'appel Feign
                             System.err.println("Erreur lors de l'appel Feign pour la formation " + formationId);
                             return null;
                         }
                     })
-                    .filter(Objects::nonNull) // Supprime les résultats null
+                    .filter(Objects::nonNull)
                     .collect(Collectors.toList());
 
             if (formations.isEmpty()) {
-                return ResponseEntity.noContent().build(); // Retourne un statut 204 si aucune formation n'a été récupérée
+                return ResponseEntity.noContent().build();
             }
             return ResponseEntity.ok(formations);
         } else {
@@ -81,9 +82,9 @@ public class Rhcontroller {
         }
     }
 
-    @GetMapping("/{employerId}/departement")
-    public ResponseEntity<Object> getDepartementByEmployerId(@PathVariable Long employerId) {
-        Optional<User> employer = employerService.getEmployerById(employerId);
+    @GetMapping("/{username}/departement")
+    public ResponseEntity<Object> getDepartementByUsername(@PathVariable String username) {
+        Optional<User> employer = employerService.getEmployerByUsername(username);
         if (employer.isPresent()) {
             Long departementId = employer.get().getDepartementId();
 
@@ -97,5 +98,18 @@ public class Rhcontroller {
             return ResponseEntity.notFound().build();
         }
     }
+    @GetMapping("/{username}/profile")
+    public ResponseEntity<User> getProfileByUsername(@PathVariable String username) {
+        // Récupérer l'utilisateur par son username
+        Optional<User> employer = employerService.getEmployerByUsername(username);
+
+        if (employer.isPresent()) {
+            // Retourner les informations de l'utilisateur sous forme de réponse
+            return ResponseEntity.ok(employer.get());
+        } else {
+            // Si l'utilisateur n'est pas trouvé, retourner une réponse "Not Found"
+            return ResponseEntity.notFound().build();
+        }
     }
 
+}

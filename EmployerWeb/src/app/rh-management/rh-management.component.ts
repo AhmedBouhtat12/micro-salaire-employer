@@ -1,60 +1,41 @@
 import { Component, OnInit } from '@angular/core';
 import { RhManagementService } from './rh-management.service';
-import { Formation, absences, User } from '../employer.model';
-import {DatePipe, NgForOf, NgIf} from '@angular/common';
+import { Formation, absences } from '../employer.model';
+import {DatePipe, NgForOf} from '@angular/common';
 
 @Component({
   selector: 'app-rh-management',
   templateUrl: './rh-management.component.html',
-  styleUrls: ['./rh-management.component.css'],
   imports: [
-    NgIf,
-    NgForOf,
-    DatePipe
+    DatePipe,
+    NgForOf
   ],
+  styleUrls: ['./rh-management.component.css']
 })
 export class RhManagementComponent implements OnInit {
-  formations: Formation[] = [];
   absences: absences[] = [];
-  departement: any = null;
-  profile: User | null = null;
-  error: string | null = null;
+  formations: Formation[] = [];
+  departement: any;
 
   constructor(private rhManagementService: RhManagementService) {}
 
   ngOnInit(): void {
-    this.loadData();
-  }
+    // Récupérer les absences
+    this.rhManagementService.getAbsences().subscribe({
+      next: (data) => (this.absences = data),
+      error: (error) => console.error('Erreur lors de la récupération des absences:', error),
+    });
 
-  loadData(): void {
-    // Obtenez les absences
-    this.rhManagementService.getAbsences().subscribe(
-      (data) => {
-        this.absences = data;
-      },
-      (error) => {
-        this.error = 'Erreur lors de la récupération des absences';
-      }
-    );
+    // Récupérer les formations
+    this.rhManagementService.getFormations().subscribe({
+      next: (data) => (this.formations = data),
+      error: (error) => console.error('Erreur lors de la récupération des formations:', error),
+    });
 
-    // Obtenez les formations
-    this.rhManagementService.getFormations().subscribe(
-      (data) => {
-        this.formations = data;
-      },
-      (error) => {
-        this.error = 'Erreur lors de la récupération des formations';
-      }
-    );
-
-    // Obtenez le département
-    this.rhManagementService.getDepartement().subscribe(
-      (data) => {
-        this.departement = data;
-      },
-      (error) => {
-        this.error = 'Erreur lors de la récupération du département';
-      }
-    );
+    // Récupérer le département
+    this.rhManagementService.getDepartement().subscribe({
+      next: (data) => (this.departement = data),
+      error: (error) => console.error('Erreur lors de la récupération du département:', error),
+    });
   }
 }

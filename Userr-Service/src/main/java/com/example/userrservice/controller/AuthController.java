@@ -47,8 +47,12 @@ private AuthenticationManager authenticationManager;
 
     @PostMapping("/token")
     public String getToken(@RequestBody AuthRequest authRequest) {
-        Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+        Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken((Object) authRequest.getUsername(), authRequest.getPassword()));
         if (authenticate.isAuthenticated()) {
+            System.out.println("//////////////");
+            System.out.println("NN");
+            System.out.println(authRequest.getUsername());
+            System.out.println("//////////////");
             return authService.generateToken(authRequest.getUsername());
         } else {
             throw new RuntimeException("invalid access");

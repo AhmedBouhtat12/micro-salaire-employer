@@ -162,8 +162,10 @@ public class EmployerService {
     }
 
 
-    public Optional<User> getUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+
+    public Optional<User> getEmployerByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
+
 
 }
