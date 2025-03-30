@@ -29,4 +29,5 @@ export class RhManagementService {
     const username = localStorage.getItem('username');
     return this.http.get<any>(`${this.apiUrl}/${username}/departement`);
   }
+
 }

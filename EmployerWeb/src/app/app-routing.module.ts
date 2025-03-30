@@ -8,25 +8,25 @@ import {DepartementComponent} from './departement/departement.component';
 import {AuthComponent} from './auth/auth.component';
 import {HrDashboardComponent} from './hr-dashboard/hr-dashboard.component';
 import {RhManagementComponent} from './rh-management/rh-management.component';
-import {AuthGuard} from './guards/auth.guard';
 
+import {ProfileComponent} from './Profile/profile.component';
 
 
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' }, // default route
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: AuthComponent },
 
   {
     path: 'RESPONSABLE',
     data: { roles: ['RESPONSABLE'] },
-    // canActivate: [AuthGuard],
     children: [
       { path: 'dashboard', component: HrDashboardComponent },
       { path: 'employers', component: EmployersComponent },
       { path: 'formations', component: FormationComponent },
       { path: 'absences', component: AbsenceComponent },
-      { path: 'department', component: DepartementComponent }
+      { path: 'department', component: DepartementComponent },
+      { path: 'profile', component: ProfileComponent }
     ]
   },
 
@@ -34,10 +34,8 @@ export const routes: Routes = [
     path: 'EMPLOYER',
     data: { roles: ['EMPLOYER'] },
     children: [
-
-
       { path: 'rh-management', component: RhManagementComponent },
-      { path: '', redirectTo: '/hr/dashboard', pathMatch: 'full' }
+      { path: 'profile', component: ProfileComponent }
     ]
   }
 ];

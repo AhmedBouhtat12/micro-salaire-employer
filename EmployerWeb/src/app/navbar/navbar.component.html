@@ -1,42 +1,63 @@
 <!-- Empty Navbar at the top with the same color as the sidebar header -->
-<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #34495e;">
-  <div class="container-fluid">
-    <!-- Vous pouvez ajouter un titre ou du contenu ici si nécessaire -->
-  </div>
-</nav>
+<head>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+</head>
+
+
 
 <!-- Si ce n'est pas la page de connexion, afficher la sidebar -->
 <aside *ngIf="!isLoginPage" class="sidebar">
   <div class="sidebar-header" style="background-color: #34495e;">
-    <a class="navbar-brand">Gestion des Employés</a>
+    <a class="navbar-brand">Gestion Employé</a>
   </div>
   <div class="sidebar-content">
     <ul class="nav flex-column">
-      <!-- Item commun pour RESPONSABLE et EMPLOYER -->
       <li class="nav-item">
-        <a class="nav-link" routerLink="/RESPONSABLE/dashboard">Accueil</a>
+        <a class="nav-link" [routerLink]="isResponsable ? '/RESPONSABLE/profile' : '/EMPLOYER/profile'">
+          <i class="fas fa-user"></i> Profile
+        </a>
       </li>
 
-      <!-- Afficher ces éléments uniquement pour le rôle RESPONSABLE -->
       <li class="nav-item" *ngIf="isResponsable">
-        <a class="nav-link" routerLink="/RESPONSABLE/employers">Employés</a>
+        <a class="nav-link" routerLink="/RESPONSABLE/dashboard">
+          <i class="fas fa-home"></i> Accueil
+        </a>
       </li>
-      <li class="nav-item" *ngIf="isResponsable">
-        <a class="nav-link" routerLink="/RESPONSABLE/formations">Formations</a>
-      </li>
-      <li class="nav-item" *ngIf="isResponsable">
-        <a class="nav-link" routerLink="/RESPONSABLE/absences">Absences</a>
-      </li>
-      <li class="nav-item" *ngIf="isResponsable">
-        <a class="nav-link" routerLink="/RESPONSABLE/department">Départements</a>
+      <li class="nav-item" *ngIf="isEmployer">
+        <a class="nav-link" routerLink="/EMPLOYER/rh-management">
+          <i class="fas fa-home"></i> Accueil
+        </a>
       </li>
 
+      <li class="nav-item" *ngIf="isResponsable">
+        <a class="nav-link" routerLink="/RESPONSABLE/employers">
+          <i class="fas fa-users"></i> Employés
+        </a>
+      </li>
+      <li class="nav-item" *ngIf="isResponsable">
+        <a class="nav-link" routerLink="/RESPONSABLE/formations">
+          <i class="fas fa-chalkboard-teacher"></i> Formations
+        </a>
+      </li>
+      <li class="nav-item" *ngIf="isResponsable">
+        <a class="nav-link" routerLink="/RESPONSABLE/absences">
+          <i class="fas fa-calendar-day"></i> Absences
+        </a>
+      </li>
+      <li class="nav-item" *ngIf="isResponsable">
+        <a class="nav-link" routerLink="/RESPONSABLE/department">
+          <i class="fas fa-building"></i> Départements
+        </a>
+      </li>
 
-
-      <!-- Bouton de déconnexion commun pour RESPONSABLE et EMPLOYER -->
+      <!-- Bouton de déconnexion -->
       <li class="nav-item">
-        <button class="btn btn-danger" (click)="logout()">Déconnexion</button>
+        <button class="btn btn-danger" (click)="logout()">
+          <i class="fas fa-sign-out-alt"></i> Déconnexion
+        </button>
       </li>
+
     </ul>
   </div>
 </aside>

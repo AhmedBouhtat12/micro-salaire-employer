@@ -42,7 +42,7 @@ public class Rhcontroller {
     @GetMapping("/{username}/absences")
     public ResponseEntity<List<Absence>> getAbsencesByUsername(@PathVariable String username) {
         Optional<User> employer = employerService.getEmployerByUsername(username);
-        ²   if (employer.isPresent()) {
+          if (employer.isPresent()) {
             List<Long> absencesId = employer.get().getAbsencesId();
 
             List<Absence> absences = absencesId.stream()
@@ -111,5 +111,4 @@ public class Rhcontroller {
             return ResponseEntity.notFound().build();
         }
     }
-
 }

@@ -24,17 +24,13 @@ export class NavbarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Ecoute des changements de route
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe((event: NavigationEnd) => {
-        this.isLoginPage = event.urlAfterRedirects === '/login'; // Vérifier si on est sur la page de connexion
-      });
-
     const role = localStorage.getItem('role');
-    if (role) {
-      this.isResponsable = role === 'RESPONSABLE';
-      this.isEmployer = role === 'EMPLOYER';
+    if (role === 'RESPONSABLE') {
+      this.isResponsable = true;
+      this.isEmployer = false;
+    } else if (role === 'EMPLOYER') {
+      this.isEmployer = true;
+      this.isResponsable = false;
     }
   }
 

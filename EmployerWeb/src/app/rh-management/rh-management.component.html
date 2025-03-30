@@ -1,29 +1,65 @@
 <div class="container my-5">
-<div class="card-header">
-  Formations de l'employé
+  <div class="row">
+    <!-- Carte Formations (fixe) -->
+    <div class="col-lg-6 mb-4">
+      <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white text-center">
+          <h5 class="mb-0">📚 Formations de l'employé</h5>
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Début</th>
+              <th>Fin</th>
+              <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let formation of formations">
+              <td>{{ formation.titreFormation }}</td>
+              <td>{{ formation.dateDebut | date: 'dd/MM/yyyy' }}</td>
+              <td>{{ formation.dateFin | date: 'dd/MM/yyyy' }}</td>
+              <td>{{ formation.certificationObtenue }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carte Absences -->
+    <div class="col-lg-6 mb-4">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white text-center">
+          <h5 class="mb-0">📅 Absences de l'employé</h5>
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>Type</th>
+              <th>Début</th>
+              <th>Fin</th>
+              <th>Statut</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let absence of absences">
+              <td>{{ absence.type }}</td>
+              <td>{{ absence.startDate | date: 'dd/MM/yyyy' }}</td>
+              <td>{{ absence.endDate | date: 'dd/MM/yyyy' }}</td>
+              <td>
+
+                    {{ absence.status }}
+
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-<div class="card-body">
-  <table class="table">
-    <thead>
-    <tr>
-      <th>Nom de la Formation</th>
-      <th>Date de Début</th>
-      <th>Date de Fin</th>
-      <th>Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let formation of formations">
-      <td>{{ formation.titreFormation }}</td>
-      <td>{{ formation.dateDebut | date: 'dd/MM/yyyy' }}</td>
-      <td>{{ formation.dateFin | date: 'dd/MM/yyyy' }}</td>
-      <td>{{ formation.certificationObtenue }}</td>
-
-    </tr>
-    </tbody>
-  </table>
-
-</div>
-</div>
-
-

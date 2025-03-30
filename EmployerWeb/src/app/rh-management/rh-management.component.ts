@@ -1,21 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { RhManagementService } from './rh-management.service';
 import { Formation, absences } from '../employer.model';
-import {DatePipe, NgForOf} from '@angular/common';
+import { DatePipe, NgClass, NgForOf } from '@angular/common';
 
 @Component({
   selector: 'app-rh-management',
   templateUrl: './rh-management.component.html',
-  imports: [
-    DatePipe,
-    NgForOf
-  ],
-  styleUrls: ['./rh-management.component.css']
+  imports: [DatePipe, NgForOf],
+  styleUrls: ['./rh-management.component.css'],
 })
 export class RhManagementComponent implements OnInit {
   absences: absences[] = [];
   formations: Formation[] = [];
   departement: any;
+  userProfile: any;
 
   constructor(private rhManagementService: RhManagementService) {}
 
@@ -37,5 +35,6 @@ export class RhManagementComponent implements OnInit {
       next: (data) => (this.departement = data),
       error: (error) => console.error('Erreur lors de la récupération du département:', error),
     });
+
   }
 }

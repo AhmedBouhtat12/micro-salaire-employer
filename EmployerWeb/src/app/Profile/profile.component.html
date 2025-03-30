@@ -1,0 +1,40 @@
+<div class="container">
+  <h2>Profil {{ username }}</h2>
+
+  <div class="profile-section">
+    <div class="profile-item">
+      <h4 class="profile-label">Nom d'utilisateur</h4>
+      <p class="profile-value">{{ username }}</p>
+    </div>
+
+    <div class="profile-item">
+      <h4 class="profile-label">Nom Complet</h4>
+      <p class="profile-value">{{ nom }} {{ prenom }}</p>
+    </div>
+
+    <div class="profile-item">
+      <h4 class="profile-label">Email</h4>
+      <p class="profile-value">{{ email }}</p>
+    </div>
+
+    <div class="profile-item">
+      <h4 class="profile-label">Adresse</h4>
+      <p class="profile-value">{{ address }}</p>
+    </div>
+
+    <div class="profile-item">
+      <h4 class="profile-label">Téléphone</h4>
+      <p class="profile-value">{{ telephone }}</p>
+    </div>
+
+    <div class="profile-item">
+      <h4 class="profile-label">Type de Contrat</h4>
+      <p class="profile-value">{{ contractType }}</p>
+    </div>
+  </div>
+
+  <div class="profile-actions">
+    <button class="save-btn">Sauvegarder les modifications</button>
+    <button class="cancel-btn">Annuler</button>
+  </div>
+</div>
